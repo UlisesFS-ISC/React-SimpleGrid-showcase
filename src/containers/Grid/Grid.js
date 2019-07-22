@@ -25,6 +25,8 @@ class Grid extends React.Component {
 
   // sets the isEditing state variable to true on double click
   startEditingMode = () => {
+    let { updateSelectedCells, currentSelectedCell } = this.props;
+    updateSelectedCells(currentSelectedCell)(false);
     this.setState({
       isEditing: true
     });
@@ -38,7 +40,6 @@ class Grid extends React.Component {
       (e.key === "Delete" || e.key === "Backspace") &&
       (selectedCells.length > 1 || !isEditing)
     ) {
-      console.log("delete", selectedCells);
       clearCells();
     }
   };
@@ -55,7 +56,7 @@ class Grid extends React.Component {
       selectedCells
     } = this.props;
     let rows = [];
-    cells.forEach(row => {
+    cells.forEach((row, rowIndex) => {
       let rowCells = [];
       row.forEach(cell => {
         let cellId = cell.id;
@@ -76,7 +77,11 @@ class Grid extends React.Component {
           />
         );
       });
-      rows.push(<div className="cellRow columns is-gapless">{rowCells}</div>);
+      rows.push(
+        <div key={`row${rowIndex}`} className="cellRow columns is-gapless">
+          {rowCells}
+        </div>
+      );
     });
     return rows;
   };
