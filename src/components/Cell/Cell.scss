@@ -1,0 +1,14 @@
+.cell{
+color: transparent;
+text-shadow: 0 0 0 gray;
+outline: none;
+  &-selected{
+    border-color: blue;
+    &_editable {
+      border-color: black;
+      color: black;
+      text-align: center;
+    }
+  }
+}
+
